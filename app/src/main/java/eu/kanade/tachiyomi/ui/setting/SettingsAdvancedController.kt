@@ -229,38 +229,6 @@ class SettingsAdvancedController : SettingsController() {
                 isPersistent = false
 
                 switchPreference {
-                    title = "Enable integrated hentai features"
-                    summary = "This is a experimental feature that will disable all hentai features if toggled off"
-                    key = Keys.eh_is_hentai_enabled
-                    defaultValue = true
-
-                    onChange {
-                        if (preferences.eh_isHentaiEnabled().get()) {
-                            if (EH_SOURCE_ID !in BlacklistedSources.HIDDEN_SOURCES) {
-                                BlacklistedSources.HIDDEN_SOURCES += EH_SOURCE_ID
-                            }
-                            if (EXH_SOURCE_ID !in BlacklistedSources.HIDDEN_SOURCES) {
-                                BlacklistedSources.HIDDEN_SOURCES += EXH_SOURCE_ID
-                            }
-                            if (NHENTAI_SOURCE_ID !in BlacklistedSources.HIDDEN_SOURCES) {
-                                BlacklistedSources.HIDDEN_SOURCES += NHENTAI_SOURCE_ID
-                            }
-                        } else {
-                            if (EH_SOURCE_ID in BlacklistedSources.HIDDEN_SOURCES) {
-                                BlacklistedSources.HIDDEN_SOURCES -= EH_SOURCE_ID
-                            }
-                            if (EXH_SOURCE_ID in BlacklistedSources.HIDDEN_SOURCES) {
-                                BlacklistedSources.HIDDEN_SOURCES -= EXH_SOURCE_ID
-                            }
-                            if (NHENTAI_SOURCE_ID in BlacklistedSources.HIDDEN_SOURCES) {
-                                BlacklistedSources.HIDDEN_SOURCES -= NHENTAI_SOURCE_ID
-                            }
-                        }
-                        true
-                    }
-                }
-
-                switchPreference {
                     title = "Enable delegated sources"
                     key = Keys.eh_delegateSources
                     defaultValue = true

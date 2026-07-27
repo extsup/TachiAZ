@@ -54,7 +54,6 @@ import exh.NHENTAI_SOURCE_ID
 import exh.eh.EHentaiUpdateWorker
 import exh.source.BlacklistedSources
 import exh.uconfig.WarnConfigureDialogController
-import exh.ui.batchadd.BatchAddController
 import exh.ui.lock.LockActivityDelegate
 import exh.ui.lock.LockController
 import exh.ui.lock.lockEnabled
@@ -163,9 +162,6 @@ class MainActivity : BaseActivity<MainActivityBinding>() {
                     R.id.nav_drawer_history -> setRoot(HistoryController(), id)
                     R.id.nav_drawer_sources -> setRoot(SourceController(), id)
                     R.id.nav_drawer_extensions -> setRoot(ExtensionController(), id)
-                    // --> EXH
-                    R.id.nav_drawer_batch_add -> setRoot(BatchAddController(), id)
-                    // <-- EHX
                     R.id.nav_drawer_downloads -> {
                         router.pushController(DownloadController().withFadeTransaction())
                     }

@@ -88,13 +88,6 @@ class SettingsMainController : SettingsController() {
                 titleRes = R.string.backup
                 onClick { navigateTo(SettingsBackupController()) }
             }
-            if (preferences.eh_isHentaiEnabled().get()) {
-                preference {
-                    iconRes = R.drawable.eh_ic_ehlogo_red_24dp
-                    iconTint = tintColor
-                    titleRes = R.string.pref_category_eh
-                    onClick { navigateTo(SettingsEhController()) }
-                }
                 preference {
                     iconRes = R.drawable.eh_ic_nhlogo_color
                     iconTint = tintColor
