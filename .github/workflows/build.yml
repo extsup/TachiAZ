@@ -23,16 +23,6 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@f29f5a9d7b09a7c6b29859002d29d24e1674c884 # v5.0.1
 
-      - name: Write google-services.json
-        uses: DamianReeves/write-file-action@v1.3
-        with:
-          # The path to the file to write
-          path: app/google-services.json
-          # The contents of the file
-          contents: ${{ secrets.GOOGLE_SERVICES_TEXT }}
-          # The mode of writing to use: `overwrite`, `append`, or `preserve`.
-          write-mode: overwrite # optional, default is preserve
-
       - name: Build app
         uses: gradle/gradle-command-action@v2
         with:
@@ -45,15 +35,10 @@ jobs:
       - name: Sign Android release
         uses: r0adkll/sign-android-release@v1
         with:
-          # The directory to find your release to sign
           releaseDirectory: app/build/outputs/apk/standard/release
-          # The key used to sign your release in base64 encoded format
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          # The key alias
           alias: ${{ secrets.ALIAS }}
-          # The password to the keystore
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          # The password for the key
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
       - name: Upload APK
