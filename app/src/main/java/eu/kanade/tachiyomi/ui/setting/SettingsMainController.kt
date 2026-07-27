@@ -88,12 +88,7 @@ class SettingsMainController : SettingsController() {
                 titleRes = R.string.backup
                 onClick { navigateTo(SettingsBackupController()) }
             }
-                preference {
-                    iconRes = R.drawable.eh_ic_nhlogo_color
-                    iconTint = tintColor
-                    titleRes = R.string.pref_category_nh
-                    onClick { navigateTo(SettingsNhController()) }
-                }
+
             }
             preference {
                 iconRes = R.drawable.ic_code_24dp
