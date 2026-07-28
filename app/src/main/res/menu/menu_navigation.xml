@@ -16,6 +16,10 @@
             android:id="@+id/nav_drawer_history"
             android:icon="@drawable/ic_glasses_black_24dp"
             android:title="@string/label_recent_manga" />
+    </group>
+    <group
+        android:id="@+id/group_sources"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_drawer_sources"
             android:icon="@drawable/ic_explore_24dp"

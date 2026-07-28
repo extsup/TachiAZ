@@ -227,7 +227,7 @@
     <string name="unknown">Tidak diketahui</string>
     <string name="licensed">Berlisensi</string>
     <string name="remove_from_library">Hapus dari perpustakaan</string>
-    <string name="manga_info_author_label">Penulis</string>
+    <string name="manga_info_author_label">Author</string>
     <string name="manga_info_artist_label">Artis</string>
     <string name="manga_info_chapters_label">Bab</string>
     <string name="manga_info_status_label">Status</string>
@@ -523,8 +523,8 @@
     <string name="error_invalid_date_supplied">Tanggal yang salah telah dimasukkan</string>
     <string name="track_finished_reading_date">Tanggal selesai dibaca</string>
     <string name="track_started_reading_date">Tanggal mulai dibaca</string>
-    <string name="manga_info_latest_data_label">Telah diperbarui</string>
-    <string name="manga_info_last_chapter_label">Bab terakhir</string>
+    <string name="manga_info_latest_data_label">Diupdate</string>
+    <string name="manga_info_last_chapter_label">Ch. Terbaru</string>
     <string name="local_source_help_guide">Petunjuk sumber lokal</string>
     <string name="last_used_source">Terakhir digunakan</string>
     <plurals name="download_queue_summary">

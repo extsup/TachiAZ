@@ -134,6 +134,9 @@ fun ChipGroup.setChipsExtended(
         val chip =
             Chip(context).apply {
                 text = item
+                chipBackgroundColor = android.content.res.ColorStateList.valueOf(0xFF333333.toInt())
+                setTextColor(android.graphics.Color.WHITE)
+                chipCornerRadius = 4f
                 var search = item
                 if (sourceId == EXH_SOURCE_ID || sourceId == EH_SOURCE_ID || sourceId == NHENTAI_SOURCE_ID) {
                     val parsed = parseTag(search)
