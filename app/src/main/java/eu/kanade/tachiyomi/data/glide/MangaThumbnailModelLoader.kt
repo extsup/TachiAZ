@@ -17,6 +17,7 @@ import eu.kanade.tachiyomi.source.online.HttpSource
 import eu.kanade.tachiyomi.util.isLocal
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
+import eu.kanade.tachiyomi.data.preference.PreferencesHelper
 import uy.kohesive.injekt.injectLazy
 import java.io.InputStream
 
@@ -36,6 +37,7 @@ class MangaThumbnailModelLoader : ModelLoader<MangaThumbnail, InputStream> {
      * Cover cache where persistent covers are stored.
      */
     private val coverCache: CoverCache by injectLazy()
+    private val prefs: PreferencesHelper by injectLazy()
 
     /**
      * Source manager.
@@ -81,7 +83,13 @@ class MangaThumbnailModelLoader : ModelLoader<MangaThumbnail, InputStream> {
         options: Options
     ): ModelLoader.LoadData<InputStream>? {
         val manga = mangaThumbnail.manga
-        val url = manga.thumbnail_url
+        val rawUrl = manga.thumbnail_url
+        val coverResizeUrl = prefs.coverResizeUrl().get()
+        val url = if (coverResizeUrl.isNotEmpty() && !rawUrl.isNullOrEmpty() && rawUrl.startsWith("http") && !rawUrl.startsWith(coverResizeUrl)) {
+            coverResizeUrl + rawUrl
+        } else {
+            rawUrl
+        }
 
         if (url.isNullOrEmpty()) {
             return if (!manga.favorite || manga.isLocal()) {

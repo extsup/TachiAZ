@@ -174,6 +174,21 @@ class SettingsAdvancedController : SettingsController() {
                 }
             }
 
+            editTextPreference {
+                key = Keys.imageResizeUrl
+                title = "Image resize service URL"
+                summary = "URL prefix for resizing manga page images (e.g. https://wsrv.nl/?url=)"
+                text = preferences.imageResizeUrl().get()
+                dialogMessage = "Enter the image resize service URL. Leave empty to disable."
+            }
+            editTextPreference {
+                key = Keys.coverResizeUrl
+                title = "Cover resize service URL"
+                summary = "URL prefix for resizing cover images (e.g. https://wsrv.nl/?url=)"
+                text = preferences.coverResizeUrl().get()
+                dialogMessage = "Enter the cover resize service URL. Leave empty to disable."
+            }
+
             // <-- EXH
 
             preferenceCategory {

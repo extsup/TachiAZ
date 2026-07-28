@@ -254,6 +254,10 @@ class PreferencesHelper(val context: Context) {
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.124 Safari/537.36 Edg/102.0.1245.44"
         )
 
+    fun imageResizeUrl() = flowPrefs.getString(Keys.imageResizeUrl, "")
+    fun coverResizeUrl() = flowPrefs.getString(Keys.coverResizeUrl, "")
+    fun imageResizeDisabledSources() = flowPrefs.getStringSet(Keys.imageResizeDisabledSources, emptySet())
+
     // --> AZ J2K CHERRYPICKING
 
     fun defaultMangaOrder() = flowPrefs.getString("default_manga_order", "")

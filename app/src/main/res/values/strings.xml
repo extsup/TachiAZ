@@ -102,6 +102,8 @@
     <string name="action_set_filter">Set filter</string>
     <string name="action_pin">Pin</string>
     <string name="action_unpin">Unpin</string>
+    <string name="action_enable_image_resize">Enable image resize</string>
+    <string name="action_disable_image_resize">Disable image resize</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_cancel_all">Cancel all</string>
     <string name="action_sort">Sort</string>

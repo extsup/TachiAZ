@@ -170,13 +170,15 @@ class SourceController(bundle: Bundle? = null) :
                 items =
                 listOf(
                     activity.getString(R.string.action_hide),
-                    activity.getString(if (isPinned) R.string.action_unpin else R.string.action_pin)
+                    activity.getString(if (isPinned) R.string.action_unpin else R.string.action_pin),
+                    activity.getString(if (isImageResizeDisabled(item.source)) R.string.action_enable_image_resize else R.string.action_disable_image_resize)
                 ),
                 waitForPositiveButton = false
             ) { dialog, which, _ ->
                 when (which) {
                     0 -> hideCatalogue(item.source)
                     1 -> pinCatalogue(item.source, isPinned)
+                    2 -> toggleImageResize(item.source)
                 }
                 dialog.dismiss()
             }
@@ -202,6 +204,19 @@ class SourceController(bundle: Bundle? = null) :
         }
 
         presenter.updateSources()
+    }
+
+    private fun isImageResizeDisabled(source: Source): Boolean {
+        return source.id.toString() in preferences.imageResizeDisabledSources().get()
+    }
+
+    private fun toggleImageResize(source: Source) {
+        val current = preferences.imageResizeDisabledSources().get()
+        if (isImageResizeDisabled(source)) {
+            preferences.imageResizeDisabledSources().set(current - source.id.toString())
+        } else {
+            preferences.imageResizeDisabledSources().set(current + source.id.toString())
+        }
     }
 
     /**

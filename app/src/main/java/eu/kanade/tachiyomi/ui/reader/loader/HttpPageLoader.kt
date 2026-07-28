@@ -239,6 +239,14 @@ class HttpPageLoader(
      * @param page the page whose source image has to be downloaded.
      */
     private fun HttpSource.fetchImageFromCacheThenNet(page: ReaderPage): Observable<ReaderPage> {
+        val resizeUrl = prefs.imageResizeUrl().get()
+        val resizeDisabled = source.id.toString() in prefs.imageResizeDisabledSources().get()
+        if (resizeUrl.isNotEmpty() && !resizeDisabled && !page.imageUrl.isNullOrEmpty()) {
+            val originalUrl = page.imageUrl!!
+            if (!originalUrl.startsWith(resizeUrl)) {
+                page.imageUrl = resizeUrl + originalUrl
+            }
+        }
         return if (page.imageUrl.isNullOrEmpty()) {
             fetchPageImageUrl(page).flatMap { getCachedImage(it) }
         } else {
