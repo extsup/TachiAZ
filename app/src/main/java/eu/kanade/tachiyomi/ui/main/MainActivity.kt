@@ -265,16 +265,14 @@ class MainActivity : BaseActivity<MainActivityBinding>() {
                 EHentaiUpdateWorker.scheduleBackground(this)
             }
         }
-        if (!preferences.eh_isHentaiEnabled().get()) {
-            if (EH_SOURCE_ID !in BlacklistedSources.HIDDEN_SOURCES) {
-                BlacklistedSources.HIDDEN_SOURCES += EH_SOURCE_ID
-            }
-            if (EXH_SOURCE_ID !in BlacklistedSources.HIDDEN_SOURCES) {
-                BlacklistedSources.HIDDEN_SOURCES += EXH_SOURCE_ID
-            }
-            if (NHENTAI_SOURCE_ID !in BlacklistedSources.HIDDEN_SOURCES) {
-                BlacklistedSources.HIDDEN_SOURCES += NHENTAI_SOURCE_ID
-            }
+        if (EH_SOURCE_ID !in BlacklistedSources.HIDDEN_SOURCES) {
+            BlacklistedSources.HIDDEN_SOURCES += EH_SOURCE_ID
+        }
+        if (EXH_SOURCE_ID !in BlacklistedSources.HIDDEN_SOURCES) {
+            BlacklistedSources.HIDDEN_SOURCES += EXH_SOURCE_ID
+        }
+        if (NHENTAI_SOURCE_ID !in BlacklistedSources.HIDDEN_SOURCES) {
+            BlacklistedSources.HIDDEN_SOURCES += NHENTAI_SOURCE_ID
         }
         // EXH <--
 

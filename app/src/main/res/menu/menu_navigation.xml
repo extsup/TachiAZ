@@ -21,10 +21,6 @@
             android:icon="@drawable/ic_explore_24dp"
             android:title="@string/label_sources" />
         <item
-            android:id="@+id/nav_drawer_batch_add"
-            android:icon="@drawable/ic_playlist_add_black_24dp"
-            android:title="@string/eh_batch_add" />
-        <item
             android:id="@+id/nav_drawer_extensions"
             android:icon="@drawable/ic_extension_24dp"
             android:title="@string/label_extensions" />
