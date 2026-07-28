@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Application Colors -->
-    <color name="colorPrimary">#54759E</color>
-    <color name="colorPrimaryDark">#435E7E</color>
+    <color name="colorPrimary">#800000</color>
+    <color name="colorPrimaryDark">#600000</color>
 
     <!-- Dark Application Colors -->
     <color name="colorDarkPrimary">#212121</color>
