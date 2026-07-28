@@ -238,7 +238,7 @@
                         style="@style/TextAppearance.Regular.Body1.Secondary"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="4dp"
                         android:ellipsize="end"
                         android:maxLines="4"
                         android:textIsSelectable="false"

@@ -364,8 +364,7 @@ class MangaInfoController(private val fromSource: Boolean = false) :
             binding.mangaSource.text = "• " + view.context.getString(R.string.unknown)
             // EXH -->
         } else if (source.id == MERGED_SOURCE_ID) {
-            binding.mangaSource.text =
-                MergedSource.MangaConfig.readFromUrl(json, manga.url).children.map {
+            binding.mangaSource.text = "• " + MergedSource.MangaConfig.readFromUrl(json, manga.url).children.map {
                     sourceManager.getOrStub(it.source).toString()
                 }.distinct().joinToString()
             // EXH <--
