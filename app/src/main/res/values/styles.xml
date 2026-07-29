@@ -65,7 +65,7 @@
 
     <style name="Theme.Widget.NavigationView.Light">
         <item name="colorControlHighlight">#80800080</item>
-        <item name="colorPrimary">?colorAccent</item>
+        <item name="colorPrimary">#80800080</item>
         <item name="colorOnSurface">@color/md_black_1000</item>
         <item name="android:backgroundTint">?colorSurface</item>
         <item name="android:background">?colorSurface</item>
@@ -77,13 +77,14 @@
 
     <style name="Theme.Widget.NavigationView.Dark">
         <item name="colorControlHighlight">#80800080</item>
-        <item name="colorPrimary">?colorAccent</item>
+        <item name="colorPrimary">#80800080</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="elevationOverlayEnabled">false</item>
     </style>
 
     <style name="Theme.Widget.NavigationView.Amoled">
-        <item name="colorPrimary">?colorAccent</item>
+        <item name="colorControlHighlight">#80800080</item>
+        <item name="colorPrimary">#80800080</item>
         <item name="colorOnSurface">@color/md_grey_100</item>
         <item name="android:backgroundTint">?colorSurface</item>
         <item name="android:background">?colorSurface</item>
