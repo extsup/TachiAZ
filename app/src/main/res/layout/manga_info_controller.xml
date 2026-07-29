@@ -220,7 +220,7 @@
                         android:textIsSelectable="false"
                         app:layout_constraintBaseline_toBaselineOf="@+id/manga_status_label"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/manga_status_label" />
+                        app:layout_constraintStart_toEndOf="@+id/manga_source_label" />
 
                     <TextView
                         android:id="@+id/manga_source_label"
@@ -244,7 +244,7 @@
                         android:textIsSelectable="false"
                         app:layout_constraintBaseline_toBaselineOf="@+id/manga_source_label"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/manga_status_label" />
+                        app:layout_constraintStart_toEndOf="@+id/manga_source_label" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
