@@ -24,6 +24,10 @@
             android:id="@+id/nav_drawer_sources"
             android:icon="@drawable/ic_explore_24dp"
             android:title="@string/label_sources" />
+    </group>
+    <group
+        android:id="@+id/group_extensions"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_drawer_extensions"
             android:icon="@drawable/ic_extension_24dp"
