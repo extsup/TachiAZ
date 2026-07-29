@@ -36,7 +36,7 @@ android {
     namespace "eu.kanade.tachiyomi"
 
     defaultConfig {
-        applicationId "eu.kanade.tachiyomi.az"
+        applicationId "eu.kanade.tachiyomi.azz"
         minSdkVersion 24
         targetSdkVersion 29
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
