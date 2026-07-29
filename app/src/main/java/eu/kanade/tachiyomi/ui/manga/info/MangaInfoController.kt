@@ -346,32 +346,32 @@ class MangaInfoController(private val fromSource: Boolean = false) :
         // Update artist TextView.
         binding.mangaArtist.text =
             if (manga.artist.isNullOrBlank()) {
-                " • " + view.context.getString(R.string.unknown)
+                "• " + view.context.getString(R.string.unknown)
             } else {
-                " • " + manga.artist
+                "• " + manga.artist
             }
 
         // Update author TextView.
         binding.mangaAuthor.text =
             if (manga.author.isNullOrBlank()) {
-                " • " + view.context.getString(R.string.unknown)
+                "• " + view.context.getString(R.string.unknown)
             } else {
-                " • " + manga.author
+                "• " + manga.author
             }
 
         // If manga source is known update source TextView.
         if (source == null) {
-            binding.mangaSource.text = " • " + view.context.getString(R.string.unknown)
+            binding.mangaSource.text = "• " + view.context.getString(R.string.unknown)
             // EXH -->
         } else if (source.id == MERGED_SOURCE_ID) {
-            binding.mangaSource.text = " • " + MergedSource.MangaConfig.readFromUrl(json, manga.url).children.map {
+            binding.mangaSource.text = "• " + MergedSource.MangaConfig.readFromUrl(json, manga.url).children.map {
                     sourceManager.getOrStub(it.source).toString()
                 }.distinct().joinToString()
             // EXH <--
         } else {
             val mangaSource = source.toString()
             with(binding.mangaSource) {
-                text = " • $mangaSource"
+                text = "• $mangaSource"
                 setOnClickListener {
                     val sourceManager = Injekt.get<SourceManager>()
                     performSearch(sourceManager.getOrStub(source.id).name)
@@ -400,7 +400,7 @@ class MangaInfoController(private val fromSource: Boolean = false) :
             }
 
         // Update status TextView.
-        binding.mangaStatus.text = " • " + view.context.getString(
+        binding.mangaStatus.text = "• " + view.context.getString(
             when (manga.status) {
                 SManga.ONGOING -> R.string.ongoing
                 SManga.COMPLETED -> R.string.completed
@@ -447,17 +447,17 @@ class MangaInfoController(private val fromSource: Boolean = false) :
      */
     fun setChapterCount(count: Float) {
         if (count > 0f) {
-            binding.mangaChapters.text = " • " + DecimalFormat("#.#").format(count)
+            binding.mangaChapters.text = "• " + DecimalFormat("#.#").format(count)
         } else {
-            binding.mangaChapters.text = " • " + resources?.getString(R.string.unknown)
+            binding.mangaChapters.text = "• " + resources?.getString(R.string.unknown)
         }
     }
 
     fun setLastUpdateDate(date: Date) {
         if (date.time != 0L) {
-            binding.mangaLastUpdate.text = " • " + dateFormat.format(date)
+            binding.mangaLastUpdate.text = "• " + dateFormat.format(date)
         } else {
-            binding.mangaLastUpdate.text = " • " + resources?.getString(R.string.unknown)
+            binding.mangaLastUpdate.text = "• " + resources?.getString(R.string.unknown)
         }
     }
 
