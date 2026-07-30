@@ -98,8 +98,9 @@ class MangaUpdatesApi(private val client: OkHttpClient, private val tracker: Man
         return Observable.fromCallable {
             val body = JSONObject().apply {
                 put("series", JSONObject().put("id", track.media_id))
+                put("list_id", trackerStatusToListId(track.status))
                 put("list_type", trackerStatusToMu(track.status))
-                put("chapter", track.last_chapter_read)
+                put("status", JSONObject().put("chapter", track.last_chapter_read))
             }.toString().toRequestBody("application/json".toMediaType())
 
             val request = Request.Builder()
@@ -116,8 +117,9 @@ class MangaUpdatesApi(private val client: OkHttpClient, private val tracker: Man
     fun updateLibManga(track: Track): Observable<Track> {
         return Observable.fromCallable {
             val body = JSONObject().apply {
+                put("list_id", trackerStatusToListId(track.status))
                 put("list_type", trackerStatusToMu(track.status))
-                put("chapter", track.last_chapter_read)
+                put("status", JSONObject().put("chapter", track.last_chapter_read))
                 if (track.score > 0) put("rating", track.score.toInt())
             }.toString().toRequestBody("application/json".toMediaType())
 
@@ -130,6 +132,16 @@ class MangaUpdatesApi(private val client: OkHttpClient, private val tracker: Man
             client.newCall(request).execute()
             track
         }
+    }
+
+    private fun trackerStatusToListId(status: Int) = when (status) {
+        MangaUpdates.READING -> 0
+        MangaUpdates.PLAN_TO_READ -> 1
+        MangaUpdates.COMPLETED -> 2
+        MangaUpdates.DROPPED -> 3
+        MangaUpdates.UNFINISHED -> 3
+        MangaUpdates.ON_HOLD -> 4
+        else -> 0
     }
 
     private fun trackerStatusToMu(status: Int) = when (status) {
