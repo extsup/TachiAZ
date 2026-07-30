@@ -368,7 +368,8 @@ class MangaUpdatesRecs : API("https://api.mangaupdates.com/v1/") {
 
             val recs = catRecs.map { rec ->
                 val obj = rec.jsonObject
-                val title = obj["series_name"]?.jsonPrimitive?.content ?: ""
+                val rawUrl = obj["series_url"]?.jsonPrimitive?.content ?: ""
+                val title = rawUrl.trimEnd("/".toCharArray()).substringAfterLast("/").replace("-", " ").split(" ").joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
                 Timber.tag("RECOMMENDATIONS").d("MANGAUPDATES > FOUND RECOMMENDATION > %s", title)
                 SMangaImpl().apply {
                     this.title = title
