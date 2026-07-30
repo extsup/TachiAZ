@@ -326,9 +326,63 @@ open class RecommendsPager(
         val API_MAP =
             mapOf(
                 API.MYANIMELIST to MyAnimeList(),
-                API.ANILIST to Anilist()
+                API.ANILIST to Anilist(),
+                API.MANGAUPDATES to MangaUpdatesRecs()
             )
 
-        enum class API { MYANIMELIST, ANILIST }
+        enum class API { MYANIMELIST, ANILIST, MANGAUPDATES }
+    }
+}
+
+class MangaUpdatesRecs : API("https://api.mangaupdates.com/v1/") {
+    override fun getRecsBySearch(
+        search: String,
+        callback: (recs: List<SMangaImpl>?, error: Throwable?) -> Unit
+    ) {
+        val httpUrl = endpoint.toHttpUrlOrNull()
+        if (httpUrl == null) {
+            callback.invoke(null, Exception("Could not convert endpoint url"))
+            return
+        }
+
+        val searchBody = buildJsonObject { put("search", search); put("perpage", 1) }
+            .toString().toRequestBody("application/json".toMediaTypeOrNull())
+
+        val searchRequest = Request.Builder()
+            .url("${endpoint}series/search")
+            .post(searchBody)
+            .build()
+
+        val handler = CoroutineExceptionHandler { _, exception -> callback.invoke(null, exception) }
+
+        scope.launch(handler) {
+            val searchResponse = client.newCall(searchRequest).await()
+            val searchData = Json.parseToJsonElement(searchResponse.body.string()).jsonObject
+            val results = searchData["results"]?.jsonArray ?: throw Exception("No results")
+            if (results.isEmpty()) throw Exception("'$search' not found")
+
+            val seriesId = results.first().jsonObject["record"]!!.jsonObject["series_id"]!!.jsonPrimitive.content
+            Timber.tag("RECOMMENDATIONS").d("MANGAUPDATES > FOUND ID > %s", seriesId)
+
+            val recRequest = Request.Builder()
+                .url("${endpoint}series/$seriesId/recommendations")
+                .get()
+                .build()
+
+            val recResponse = client.newCall(recRequest).await()
+            val recData = Json.parseToJsonElement(recResponse.body.string()).jsonArray
+
+            val recs = recData.map { rec ->
+                val obj = rec.jsonObject
+                Timber.tag("RECOMMENDATIONS").d("MANGAUPDATES > FOUND RECOMMENDATION > %s", obj["title"]?.jsonPrimitive?.content)
+                SMangaImpl().apply {
+                    this.title = obj["title"]?.jsonPrimitive?.content ?: ""
+                    this.thumbnail_url = obj["image"]?.jsonObject?.get("url")?.jsonObject?.get("original")?.jsonPrimitive?.content ?: ""
+                    this.initialized = true
+                    this.url = obj["url"]?.jsonPrimitive?.content ?: ""
+                }
+            }
+            callback.invoke(recs, null)
+        }
     }
 }

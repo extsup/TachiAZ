@@ -67,6 +67,11 @@ class SettingsTrackingController :
                     tabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
                     tabsIntent.launchUrl(activity!!, ShikimoriApi.authUrl())
                 }
+                trackPreference(trackManager.mangaUpdates) {
+                    val dialog = TrackLoginDialog(trackManager.mangaUpdates, R.string.username)
+                    dialog.targetController = this@SettingsTrackingController
+                    dialog.showDialog(router)
+                }
                 trackPreference(trackManager.bangumi) {
                     val tabsIntent =
                         CustomTabsIntent.Builder()
