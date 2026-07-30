@@ -53,6 +53,7 @@
         android:fitsSystemWindows="true"
         android:theme="?attr/navigation_view_theme"
         app:headerLayout="@layout/navigation_header"
+        android:paddingTop="16dp"
         app:itemIconPadding="12dp"
         app:menu="@menu/menu_navigation"/>
 

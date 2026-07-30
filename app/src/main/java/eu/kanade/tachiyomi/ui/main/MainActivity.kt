@@ -174,6 +174,23 @@ class MainActivity : BaseActivity<MainActivityBinding>() {
             true
         }
 
+        // Perbesar item Sumber di navigation drawer
+        binding.navView.post {
+            val menu = binding.navView.menu
+            val sourcesItem = menu.findItem(R.id.nav_drawer_sources)
+            val navMenuView = binding.navView.getChildAt(0) as? android.widget.LinearLayout
+            navMenuView?.let { lv ->
+                for (i in 0 until lv.childCount) {
+                    val child = lv.getChildAt(i)
+                    val tv = child.findViewById<android.widget.TextView>(com.google.android.material.R.id.design_menu_item_text)
+                    if (tv?.text == getString(R.string.label_sources)) {
+                        child.setPadding(child.paddingLeft, 24, child.paddingRight, 24)
+                        tv.textSize = 18f
+                    }
+                }
+            }
+        }
+
         val container: ViewGroup = findViewById(R.id.controller_container)
 
         router = Conductor.attachRouter(this, container, savedInstanceState)
