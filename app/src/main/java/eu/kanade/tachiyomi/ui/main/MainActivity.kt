@@ -178,14 +178,18 @@ class MainActivity : BaseActivity<MainActivityBinding>() {
         binding.navView.post {
             val recycler = binding.navView.getChildAt(0) as? androidx.recyclerview.widget.RecyclerView
             recycler?.let { rv ->
-                rv.addOnChildAttachStateChangeListener(object : androidx.recyclerview.widget.RecyclerView.OnChildAttachStateChangeListener {
-                    override fun onChildViewAttachedToWindow(view: android.view.View) {
-                        val tv = view.findViewById<android.widget.TextView>(com.google.android.material.R.id.design_menu_item_text)
-                        if (tv?.text == getString(R.string.label_sources)) {
-                            view.setPadding(view.paddingLeft, 32, view.paddingRight, 32)
-                            tv.textSize = 18f
-                        }
+                fun styleSourceItem(view: android.view.View) {
+                    val tv = view.findViewById<android.widget.TextView>(com.google.android.material.R.id.design_menu_item_text)
+                    if (tv?.text == getString(R.string.label_sources)) {
+                        view.setPadding(view.paddingLeft, 32, view.paddingRight, 32)
+                        tv.textSize = 18f
                     }
+                }
+                // Style item yang sudah ada
+                for (i in 0 until rv.childCount) styleSourceItem(rv.getChildAt(i))
+                // Style item baru saat attach
+                rv.addOnChildAttachStateChangeListener(object : androidx.recyclerview.widget.RecyclerView.OnChildAttachStateChangeListener {
+                    override fun onChildViewAttachedToWindow(view: android.view.View) = styleSourceItem(view)
                     override fun onChildViewDetachedFromWindow(view: android.view.View) {}
                 })
             }
