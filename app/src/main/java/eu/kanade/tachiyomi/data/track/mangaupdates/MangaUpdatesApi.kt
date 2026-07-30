@@ -29,7 +29,7 @@ class MangaUpdatesApi(private val client: OkHttpClient, private val tracker: Man
 
             val request = Request.Builder()
                 .url("$BASE_URL/account/login")
-                .post(body)
+                .put(body)
                 .build()
 
             val response = client.newCall(request).execute()

@@ -339,49 +339,63 @@ class MangaUpdatesRecs : API("https://api.mangaupdates.com/v1/") {
         search: String,
         callback: (recs: List<SMangaImpl>?, error: Throwable?) -> Unit
     ) {
-        val httpUrl = endpoint.toHttpUrlOrNull()
-        if (httpUrl == null) {
-            callback.invoke(null, Exception("Could not convert endpoint url"))
-            return
-        }
-
-        val searchBody = buildJsonObject { put("search", search); put("perpage", 1) }
-            .toString().toRequestBody("application/json".toMediaTypeOrNull())
-
-        val searchRequest = Request.Builder()
-            .url("${endpoint}series/search")
-            .post(searchBody)
-            .build()
-
         val handler = CoroutineExceptionHandler { _, exception -> callback.invoke(null, exception) }
 
         scope.launch(handler) {
-            val searchResponse = client.newCall(searchRequest).await()
-            val searchData = Json.parseToJsonElement(searchResponse.body.string()).jsonObject
+            // Step 1: Find series ID
+            val searchBody = buildJsonObject { put("search", search); put("perpage", 1) }
+                .toString().toRequestBody("application/json".toMediaTypeOrNull())
+            val searchRequest = Request.Builder()
+                .url("${endpoint}series/search")
+                .post(searchBody)
+                .build()
+            val searchData = Json.parseToJsonElement(client.newCall(searchRequest).await().body.string()).jsonObject
             val results = searchData["results"]?.jsonArray ?: throw Exception("No results")
             if (results.isEmpty()) throw Exception("'$search' not found")
-
-            val seriesId = results.first().jsonObject["record"]!!.jsonObject["series_id"]!!.jsonPrimitive.content
+            val record = results.first().jsonObject["record"]!!.jsonObject
+            val seriesId = record["series_id"]!!.jsonPrimitive.content
             Timber.tag("RECOMMENDATIONS").d("MANGAUPDATES > FOUND ID > %s", seriesId)
 
-            val recRequest = Request.Builder()
-                .url("${endpoint}series/$seriesId/recommendations")
+            // Step 2: Get categories of the series
+            val detailRequest = Request.Builder()
+                .url("${endpoint}series/$seriesId")
                 .get()
                 .build()
+            val detailData = Json.parseToJsonElement(client.newCall(detailRequest).await().body.string()).jsonObject
+            val categories = detailData["categories"]?.jsonArray
+                ?.take(3)
+                ?.mapNotNull { it.jsonObject["category"]?.jsonPrimitive?.content }
+                ?: emptyList()
 
-            val recResponse = client.newCall(recRequest).await()
-            val recData = Json.parseToJsonElement(recResponse.body.string()).jsonArray
+            if (categories.isEmpty()) throw Exception("No categories found")
+            Timber.tag("RECOMMENDATIONS").d("MANGAUPDATES > CATEGORIES > %s", categories.toString())
 
-            val recs = recData.map { rec ->
-                val obj = rec.jsonObject
-                Timber.tag("RECOMMENDATIONS").d("MANGAUPDATES > FOUND RECOMMENDATION > %s", obj["title"]?.jsonPrimitive?.content)
-                SMangaImpl().apply {
-                    this.title = obj["title"]?.jsonPrimitive?.content ?: ""
-                    this.thumbnail_url = obj["image"]?.jsonObject?.get("url")?.jsonObject?.get("original")?.jsonPrimitive?.content ?: ""
-                    this.initialized = true
-                    this.url = obj["url"]?.jsonPrimitive?.content ?: ""
+            // Step 3: Search series with same categories
+            val recBody = buildJsonObject {
+                put("categories", kotlinx.serialization.json.JsonArray(categories.map { JsonPrimitive(it) }))
+                put("perpage", 10)
+                put("orderby", "rating")
+            }.toString().toRequestBody("application/json".toMediaTypeOrNull())
+            val recRequest = Request.Builder()
+                .url("${endpoint}series/search")
+                .post(recBody)
+                .build()
+            val recData = Json.parseToJsonElement(client.newCall(recRequest).await().body.string()).jsonObject
+            val recResults = recData["results"]?.jsonArray ?: throw Exception("No recommendations")
+
+            val recs = recResults
+                .mapNotNull { it.jsonObject["record"]?.jsonObject }
+                .filter { it["series_id"]?.jsonPrimitive?.content != seriesId }
+                .map { obj ->
+                    val title = obj["title"]?.jsonPrimitive?.content ?: ""
+                    Timber.tag("RECOMMENDATIONS").d("MANGAUPDATES > FOUND RECOMMENDATION > %s", title)
+                    SMangaImpl().apply {
+                        this.title = title
+                        this.thumbnail_url = obj["image"]?.jsonObject?.get("url")?.jsonObject?.get("original")?.jsonPrimitive?.content ?: ""
+                        this.initialized = true
+                        this.url = obj["url"]?.jsonPrimitive?.content ?: ""
+                    }
                 }
-            }
             callback.invoke(recs, null)
         }
     }
