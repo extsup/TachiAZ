@@ -266,7 +266,7 @@ class Anilist() : API("https://graphql.anilist.co/") {
 open class RecommendsPager(
     val manga: Manga,
     val smart: Boolean = true,
-    var preferredApi: API = API.ANILIST
+    var preferredApi: API = API.MANGAUPDATES
 ) : Pager() {
     private val apiList = API_MAP.toMutableMap()
     private var currentApi: API? = null
@@ -368,8 +368,9 @@ class MangaUpdatesRecs : API("https://api.mangaupdates.com/v1/") {
 
             val recs = catRecs.map { rec ->
                 val obj = rec.jsonObject
+                val rawTitle = obj["series_name"]?.jsonPrimitive?.content ?: ""
                 val rawUrl = obj["series_url"]?.jsonPrimitive?.content ?: ""
-                val title = rawUrl.trimEnd('/').substringAfterLast("/").replace("-", " ").split(" ").joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
+                val title = rawTitle.ifEmpty { rawUrl.trimEnd('/').substringAfterLast("/").replace("-", " ").split(" ").joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } } }
                 Timber.tag("RECOMMENDATIONS").d("MANGAUPDATES > FOUND RECOMMENDATION > %s", title)
                 SMangaImpl().apply {
                     this.title = title
