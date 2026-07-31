@@ -272,31 +272,12 @@ open class RecommendsPager(
     private var currentApi: API? = null
 
     private fun handleSuccess(recs: List<SMangaImpl>) {
-        if (recs.isEmpty()) {
-            Timber.tag("RECOMMENDATIONS").e("%s > Couldn't find any", currentApi.toString())
-            apiList.remove(currentApi)
-            val list = apiList.toList()
-            currentApi =
-                if (list.isEmpty()) {
-                    null
-                } else {
-                    apiList.toList().first().first
-                }
-
-            if (currentApi != null) {
-                getRecs(currentApi!!)
-            } else {
-                Timber.tag("RECOMMENDATIONS").e("Couldn't find any")
-                onPageReceived(MangasPage(recs, false))
-            }
-        } else {
-            onPageReceived(MangasPage(recs, false))
-        }
+        onPageReceived(MangasPage(recs, false))
     }
 
     private fun handleError(error: Throwable) {
         Timber.tag("RECOMMENDATIONS").e(error)
-        handleSuccess(listOf()) // tmp workaround until errors can be displayed in app
+        onPageReceived(MangasPage(emptyList(), false))
     }
 
     private fun getRecs(api: API) {
@@ -312,12 +293,7 @@ open class RecommendsPager(
     }
 
     override suspend fun requestNextPage() {
-        if (smart) {
-            preferredApi =
-                if (manga.mangaType() != MangaType.TYPE_MANGA) API.ANILIST else preferredApi
-            Timber.tag("RECOMMENDATIONS").d("SMART > %s", preferredApi.toString())
-        }
-        currentApi = preferredApi
+        currentApi = API.MANGAUPDATES
 
         getRecs(currentApi!!)
     }
