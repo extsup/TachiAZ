@@ -402,6 +402,8 @@ class PreferencesHelper(val context: Context) {
 
     fun startReadingButton() = flowPrefs.getBoolean(Keys.startReadingButton, true)
 
+    fun showSourceLabel() = flowPrefs.getBoolean(Keys.showSourceLabel, true)
+
     fun createLegacyBackup() = flowPrefs.getBoolean(Keys.createLegacyBackup, false)
 
     fun extensionRepos() = flowPrefs.getStringSet(Keys.extensionRepos, emptySet())

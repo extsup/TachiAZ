@@ -876,4 +876,6 @@ z
         <item quantity="one">There is 1 missing chapter</item>
         <item quantity="other">There are %d missing chapters</item>
     </plurals>
+    <string name="action_hide_source_label">Sembunyikan Sumber</string>
+    <string name="action_show_source_label">Tampilkan Sumber</string>
 </resources>

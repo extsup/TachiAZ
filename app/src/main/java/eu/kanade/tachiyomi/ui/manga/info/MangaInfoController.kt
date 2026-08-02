@@ -124,6 +124,8 @@ class MangaInfoController(private val fromSource: Boolean = false) :
     override fun onViewCreated(view: View) {
         super.onViewCreated(view)
 
+        updateSourceLabelVisibility(preferences.showSourceLabel().get())
+
         // Set onclickListener to toggle favorite when FAB clicked.
         binding.fabFavorite.clicks()
             .onEach { onFabClick() }
@@ -251,6 +253,10 @@ class MangaInfoController(private val fromSource: Boolean = false) :
         if (presenter.source !is HttpSource) {
             menu.findItem(R.id.action_share).isVisible = false
         }
+        menu.findItem(R.id.action_toggle_source_label)?.title = activity?.getString(
+            if (preferences.showSourceLabel().get()) R.string.action_hide_source_label
+            else R.string.action_show_source_label
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -266,8 +272,23 @@ class MangaInfoController(private val fromSource: Boolean = false) :
                     router,
                     listOf(presenter.manga.id!!)
                 )
+            R.id.action_toggle_source_label -> {
+                val current = preferences.showSourceLabel().get()
+                preferences.showSourceLabel().set(!current)
+                updateSourceLabelVisibility(!current)
+                item.title = activity?.getString(
+                    if (!current) R.string.action_hide_source_label
+                    else R.string.action_show_source_label
+                )
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun updateSourceLabelVisibility(show: Boolean) {
+        val visibility = if (show) android.view.View.VISIBLE else android.view.View.GONE
+        binding.mangaSourceLabel.visibility = visibility
+        binding.mangaSource.visibility = visibility
     }
 
     // EXH -->

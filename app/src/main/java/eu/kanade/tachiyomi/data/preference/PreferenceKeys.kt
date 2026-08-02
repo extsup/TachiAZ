@@ -268,4 +268,6 @@ object PreferenceKeys {
     const val imageResizeDisabledSources = "image_resize_disabled_sources"
 
     const val disallowNonAsciiFilenames = "disallow_non_ascii_filenames"
+
+    const val showSourceLabel = "show_source_label"
 }

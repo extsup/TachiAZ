@@ -33,4 +33,9 @@
         android:title="@string/action_migrate"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_toggle_source_label"
+        android:title="@string/action_hide_source_label"
+        app:showAsAction="never" />
+
 </menu>
