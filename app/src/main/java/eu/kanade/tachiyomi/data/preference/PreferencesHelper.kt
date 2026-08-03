@@ -404,6 +404,9 @@ class PreferencesHelper(val context: Context) {
 
     fun showSourceLabel() = flowPrefs.getBoolean(Keys.showSourceLabel, true)
 
+    fun downloadChapterThreads() = flowPrefs.getInt(Keys.downloadChapterThreads, 1)
+    fun downloadPageThreads() = flowPrefs.getInt(Keys.downloadPageThreads, 5)
+
     fun createLegacyBackup() = flowPrefs.getBoolean(Keys.createLegacyBackup, false)
 
     fun extensionRepos() = flowPrefs.getStringSet(Keys.extensionRepos, emptySet())

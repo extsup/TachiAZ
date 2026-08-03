@@ -142,7 +142,7 @@ class SettingsReaderController : SettingsController() {
                 intListPreference {
                     key = Keys.eh_readerThreads
                     title = "Download threads"
-                    entries = arrayOf("1", "2", "3", "4", "5")
+                    entries = arrayOf("1", "2", "3", "4", "5", "10", "15", "20")
                     entryValues = entries
                     defaultValue = "2"
                     summary =

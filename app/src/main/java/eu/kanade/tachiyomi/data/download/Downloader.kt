@@ -188,17 +188,14 @@ class Downloader(
 
         subscriptions.clear()
 
+        val chapterThreads = preferences.downloadChapterThreads().get()
         subscriptions +=
             downloadsRelay.concatMapIterable { it }
-                // Concurrently download from 5 different sources
-                .groupBy { it.source }
                 .flatMap(
-                    { bySource ->
-                        bySource.concatMap { download ->
-                            downloadChapter(download).subscribeOn(Schedulers.io())
-                        }
+                    { download ->
+                        downloadChapter(download).subscribeOn(Schedulers.io())
                     },
-                    5
+                    chapterThreads
                 )
                 .onBackpressureLatest()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -319,8 +316,8 @@ class Downloader(
                 // Get all the URLs to the source images, fetch pages if necessary
                 .flatMap { download.source.fetchAllImageUrlsFromPageList(it) }
                 // Start downloading images, consider we can have downloaded images already
-                // Concurrently do 5 pages at a time
-                .flatMap({ page -> getOrDownloadImage(page, download, tmpDir) }, 5)
+                // Concurrently do pages based on preference
+                .flatMap({ page -> getOrDownloadImage(page, download, tmpDir) }, preferences.downloadPageThreads().get())
                 .onBackpressureLatest()
                 // Do when page is downloaded.
                 .doOnNext { notifier.onProgressChange(download) }

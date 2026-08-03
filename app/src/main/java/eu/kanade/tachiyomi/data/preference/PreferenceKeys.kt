@@ -270,4 +270,7 @@ object PreferenceKeys {
     const val disallowNonAsciiFilenames = "disallow_non_ascii_filenames"
 
     const val showSourceLabel = "show_source_label"
+
+    const val downloadChapterThreads = "download_chapter_threads"
+    const val downloadPageThreads = "download_page_threads"
 }

@@ -70,6 +70,27 @@ class SettingsDownloadController : SettingsController() {
                 defaultValue = true
             }
             preferenceCategory {
+                title = "Download threads"
+
+                intListPreference {
+                    key = Keys.downloadChapterThreads
+                    title = "Parallel chapter downloads"
+                    entries = arrayOf("1", "2", "3", "4", "5", "10")
+                    entryValues = entries
+                    defaultValue = "1"
+                    summary = "Number of chapters downloaded simultaneously. Current value: %s"
+                }
+                intListPreference {
+                    key = Keys.downloadPageThreads
+                    title = "Parallel page downloads per chapter"
+                    entries = arrayOf("1", "2", "3", "5", "10", "20")
+                    entryValues = entries
+                    defaultValue = "5"
+                    summary = "Number of pages downloaded simultaneously per chapter. Current value: %s"
+                }
+            }
+
+            preferenceCategory {
                 titleRes = R.string.pref_remove_after_read
 
                 switchPreference {
