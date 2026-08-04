@@ -49,6 +49,7 @@ class DownloadProvider(private val context: Context) {
      * @param manga the manga to query.
      * @param source the source of the manga.
      */
+    @Synchronized
     internal fun getMangaDir(
         manga: Manga,
         source: Source
