@@ -72,7 +72,7 @@ class SettingsLibraryController : SettingsController() {
                 }
                 intListPreference {
                     key = Keys.eh_library_rounded_corners
-                    title = "Rounded Corner Radius"
+                    title = "Kelengkungan Sudut Cover Manga"
                     entriesRes =
                         arrayOf(
                             R.string.eh_rounded_corner_0, R.string.eh_rounded_corner_1,

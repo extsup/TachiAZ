@@ -28,8 +28,13 @@ open class NetworkHelper(context: Context) {
 
     // SY -->
     open /* SY <-- */ val legacyClient by lazy {
+        val dispatcher = Dispatcher().apply {
+            maxRequests = 100
+            maxRequestsPerHost = 30
+        }
         val builder =
             OkHttpClient.Builder()
+                .dispatcher(dispatcher)
                 .cookieJar(cookieManager)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)

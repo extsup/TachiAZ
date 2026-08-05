@@ -30,7 +30,7 @@ class LockController : NucleusController<ActivityLockBinding, LockPresenter>() {
 
     override fun createPresenter() = LockPresenter()
 
-    override fun getTitle() = "Application locked"
+    override fun getTitle() = "Aplikasi dikunci"
 
     override fun onViewCreated(view: View) {
         super.onViewCreated(view)

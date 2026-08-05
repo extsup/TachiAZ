@@ -39,7 +39,7 @@ constructor(context: Context, attrs: AttributeSet? = null) :
             title = "Lock enabled"
             summary = "Tap to disable or change pin code"
         } else {
-            title = "Lock disabled"
+            title = "Kunci dinonaktifkan"
             summary = "Tap to enable"
         }
     }

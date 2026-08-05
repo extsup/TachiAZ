@@ -72,7 +72,7 @@ constructor(context: Context, attrs: AttributeSet? = null) :
             if (isChecked) {
                 "Fingerprint enabled"
             } else {
-                "Fingerprint disabled"
+                "Sidik jari dinonaktifkan"
             }
     }
 

@@ -218,20 +218,19 @@ class SettingsGeneralController : SettingsController() {
             // --> EXH
             switchPreference {
                 key = Keys.eh_expandFilters
-                title = "Expand all search filters by default"
+                title = "Perluas semua filter pencarian secara default"
                 defaultValue = false
             }
 
             switchPreference {
                 key = Keys.eh_autoSolveCaptchas
-                title = "Automatically solve captcha"
-                summary =
-                    "Use HIGHLY EXPERIMENTAL automatic ReCAPTCHA solver. Will be grayed out if unsupported by your device."
+                title = "Selesaikan captcha secara otomatis"
+                summary = "Gunakan solver ReCAPTCHA otomatis SANGAT EKSPERIMENTAL. Akan dinonaktifkan jika tidak didukung perangkat kamu."
                 defaultValue = false
             }
 
             preferenceCategory {
-                title = "Application lock"
+                title = "Kunci aplikasi"
 
                 LockPreference(context).apply {
                     key = "pref_app_lock" // Not persistent so use random key
@@ -253,14 +252,13 @@ class SettingsGeneralController : SettingsController() {
                 switchPreference {
                     key = Keys.eh_lock_manually
 
-                    title = "Lock manually only"
-                    summary =
-                        "Disable automatic app locking. The app can still be locked manually by long-pressing the three-lines/back button in the top left corner."
+                    title = "Kunci manual saja"
+                    summary = "Nonaktifkan kunci aplikasi otomatis. Aplikasi tetap dapat dikunci secara manual dengan menekan lama tombol tiga garis/kembali di pojok kiri atas."
                     defaultValue = false
                 }
                 switchPreference {
                     key = Keys.secureScreen
-                    title = "Enable Secure Screen"
+                    title = "Aktifkan Layar Aman"
                     defaultValue = false
                 }
                 switchPreference {

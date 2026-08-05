@@ -141,30 +141,30 @@ class SettingsReaderController : SettingsController() {
 
                 intListPreference {
                     key = Keys.eh_readerThreads
-                    title = "Download threads"
+                    title = "Utas unduhan"
                     entries = arrayOf("1", "2", "3", "4", "5", "10", "15", "20")
                     entryValues = entries
                     defaultValue = "2"
                     summary =
-                        "Higher values can speed up image downloading significantly, but can also trigger bans. Recommended value is 2 or 3. Current value is: %s"
+                        "Nilai lebih tinggi dapat mempercepat pengunduhan gambar secara signifikan, namun dapat memicu pemblokiran. Nilai yang disarankan adalah 2 atau 3. Nilai saat ini: %s"
                 }
                 switchPreference {
                     key = Keys.eh_aggressivePageLoading
-                    title = "Aggressively load pages"
+                    title = "Muat halaman secara agresif"
                     summary =
-                        "Slowly download the entire gallery while reading instead of just loading the pages you are viewing."
+                        "Mengunduh seluruh galeri secara perlahan saat membaca, bukan hanya halaman yang sedang dilihat."
                     defaultValue = false
                 }
                 switchPreference {
                     key = Keys.eh_readerInstantRetry
-                    title = "Skip queue on retry"
+                    title = "Lewati antrean saat mencoba ulang"
                     summary =
-                        "Normally, pressing the retry button on a failed download will wait until the downloader has finished downloading the last page before beginning to re-download the failed page. Enabling this will force the downloader to begin re-downloading the failed page as soon as you press the retry button."
+                        "Biasanya, menekan tombol coba ulang pada unduhan yang gagal akan menunggu hingga pengunduh selesai mengunduh halaman terakhir. Mengaktifkan ini akan memaksa pengunduh segera mengunduh ulang halaman yang gagal begitu tombol ditekan."
                     defaultValue = true
                 }
                 intListPreference {
                     key = Keys.eh_preload_size
-                    title = "Reader Preload amount"
+                    title = "Jumlah pramuat pembaca"
                     entryValues =
                         arrayOf(
                             "1",
@@ -193,11 +193,11 @@ class SettingsReaderController : SettingsController() {
                         )
                     defaultValue = "4"
                     summary =
-                        "The amount of pages to preload when reading. Higher values will result in a smoother reading experience, at the cost of higher cache usage, it is recommended to increase the amount of cache you allocate when using larger values"
+                        "Jumlah halaman yang dipramuat saat membaca. Nilai lebih tinggi menghasilkan pengalaman membaca lebih lancar, namun meningkatkan penggunaan cache. Disarankan menambah alokasi cache saat menggunakan nilai besar."
                 }
                 listPreference {
                     key = Keys.eh_cacheSize
-                    title = "Reader cache size"
+                    title = "Ukuran cache pembaca"
                     entryValues =
                         arrayOf(
                             "50",
@@ -238,17 +238,17 @@ class SettingsReaderController : SettingsController() {
                         )
                     defaultValue = "75"
                     summary =
-                        "The amount of images to save on device while reading. Higher values will result in a smoother reading experience, at the cost of higher disk space usage"
+                        "Jumlah gambar yang disimpan di perangkat saat membaca. Nilai lebih tinggi menghasilkan pengalaman membaca lebih lancar, namun menggunakan lebih banyak ruang penyimpanan."
                 }
                 switchPreference {
                     key = Keys.eh_preserveReadingPosition
-                    title = "Preserve reading position on read manga"
+                    title = "Simpan posisi baca pada manga yang sudah dibaca"
                     defaultValue = false
                 }
                 switchPreference {
                     key = Keys.eh_use_auto_webtoon
-                    title = "Auto Webtoon Mode"
-                    summary = "Use auto webtoon mode for manga that are detected to likely use the long strip format"
+                    title = "Mode Webtoon Otomatis"
+                    summary = "Gunakan mode webtoon otomatis untuk manga yang terdeteksi menggunakan format strip panjang."
                     defaultValue = true
                 }
             }

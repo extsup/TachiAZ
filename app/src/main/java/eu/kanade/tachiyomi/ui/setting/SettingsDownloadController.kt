@@ -70,23 +70,23 @@ class SettingsDownloadController : SettingsController() {
                 defaultValue = true
             }
             preferenceCategory {
-                title = "Download threads"
+                title = "Utas unduhan"
 
                 intListPreference {
                     key = Keys.downloadChapterThreads
-                    title = "Parallel chapter downloads"
+                    title = "Unduhan chapter paralel"
                     entries = arrayOf("1", "2", "3", "4", "5", "10")
                     entryValues = entries
                     defaultValue = "1"
-                    summary = "Number of chapters downloaded simultaneously. Current value: %s"
+                    summary = "Jumlah chapter yang diunduh secara bersamaan. Nilai saat ini: %s"
                 }
                 intListPreference {
                     key = Keys.downloadPageThreads
-                    title = "Parallel page downloads per chapter"
+                    title = "Unduhan halaman paralel per chapter"
                     entries = arrayOf("1", "2", "3", "5", "10", "20")
                     entryValues = entries
                     defaultValue = "5"
-                    summary = "Number of pages downloaded simultaneously per chapter. Current value: %s"
+                    summary = "Jumlah halaman yang diunduh secara bersamaan per chapter. Nilai saat ini: %s"
                 }
             }
 
