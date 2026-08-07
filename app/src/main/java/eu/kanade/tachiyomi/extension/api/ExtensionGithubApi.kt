@@ -14,6 +14,7 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
 import kotlinx.serialization.json.okio.decodeFromBufferedSource
 import kotlinx.serialization.protobuf.ProtoBuf
@@ -214,14 +215,16 @@ internal class ExtensionGithubApi {
                 // SY -->
                 val icon = "${repoUrl.substringBeforeLast("index.min.json")}icon/$pkgName.png"
                 // SY <--
-                val sourceUrl = element.jsonObject["sources"]
-                    ?.let { it.jsonArray }
-                    ?.firstOrNull()
-                    ?.let { it.jsonObject }
-                    ?.get("baseUrl")
-                    ?.jsonPrimitive
-                    ?.content
-                    ?: ""
+                val sourceUrl = try {
+                    element.jsonObject["sources"]
+                        ?.jsonArray
+                        ?.firstOrNull()
+                        ?.jsonObject
+                        ?.get("baseUrl")
+                        ?.jsonPrimitive
+                        ?.content
+                        ?: ""
+                } catch (e: Exception) { "" }
 
                 Extension.Available(name, pkgName, versionName, versionCode, libVersion, lang, nsfw, apkName, icon /* SY --> */, repoUrl /* SY <-- */, sourceUrl)
             }
