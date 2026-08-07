@@ -92,15 +92,15 @@ class ExtensionHolder(view: View, override val adapter: ExtensionAdapter) :
 
         val hasUpdate = extension is Extension.Installed && extension.hasUpdate
         if (hasUpdate) {
-            binding.extButton.setColorFilter(
-                android.graphics.Color.WHITE,
-                android.graphics.PorterDuff.Mode.SRC_IN
-            )
+            val typedValue = android.util.TypedValue()
+            itemView.context.theme.resolveAttribute(android.R.attr.textColorPrimary, typedValue, true)
+            binding.extButton.setColorFilter(typedValue.data, android.graphics.PorterDuff.Mode.SRC_IN)
         } else {
             binding.extButton.clearColorFilter()
         }
 
         binding.cancelButton.isVisible = !isIdle
+        binding.extButton.isVisible = isIdle
         binding.webButton.isVisible = isIdle && extension is Extension.Available
         binding.extButton.isEnabled = isIdle
         binding.extButton.isClickable = isIdle
