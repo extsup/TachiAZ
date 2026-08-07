@@ -27,5 +27,7 @@ class ExtensionAdapter(val controller: ExtensionController) :
         fun onButtonClick(position: Int)
 
         fun onCancelButtonClick(position: Int)
+
+        fun onWebButtonClick(position: Int)
     }
 }

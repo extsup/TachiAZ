@@ -9,6 +9,7 @@ import eu.kanade.tachiyomi.extension.model.Extension
 import eu.kanade.tachiyomi.extension.model.InstallStep
 import eu.kanade.tachiyomi.ui.base.holder.BaseFlexibleViewHolder
 import eu.kanade.tachiyomi.ui.base.holder.SlicedHolder
+import eu.kanade.tachiyomi.ui.webview.WebViewActivity
 import eu.kanade.tachiyomi.util.system.LocaleHelper
 import eu.kanade.tachiyomi.util.system.getResourceColor
 import io.github.mthli.slice.Slice
@@ -32,6 +33,9 @@ class ExtensionHolder(view: View, override val adapter: ExtensionAdapter) :
         }
         binding.cancelButton.setOnClickListener {
             adapter.buttonClickListener.onCancelButtonClick(bindingAdapterPosition)
+        }
+        binding.webButton.setOnClickListener {
+            adapter.buttonClickListener.onWebButtonClick(bindingAdapterPosition)
         }
     }
 
@@ -107,6 +111,7 @@ class ExtensionHolder(view: View, override val adapter: ExtensionAdapter) :
 
             val isIdle = installStep == InstallStep.Idle || installStep == InstallStep.Error
             binding.cancelButton.isVisible = !isIdle
+            binding.webButton.isVisible = isIdle && extension is Extension.Available
             isEnabled = isIdle
             isClickable = isIdle
         }
