@@ -90,16 +90,13 @@ class ExtensionHolder(view: View, override val adapter: ExtensionAdapter) :
 
         binding.extButton.setImageResource(iconRes)
 
-        // Background hitam rounded hanya untuk state hasUpdate
         val hasUpdate = extension is Extension.Installed && extension.hasUpdate
         if (hasUpdate) {
-            binding.extButton.setBackgroundResource(R.drawable.bg_button_update)
             binding.extButton.setColorFilter(
                 android.graphics.Color.WHITE,
                 android.graphics.PorterDuff.Mode.SRC_IN
             )
         } else {
-            binding.extButton.setBackgroundResource(android.R.color.transparent)
             binding.extButton.clearColorFilter()
         }
 
