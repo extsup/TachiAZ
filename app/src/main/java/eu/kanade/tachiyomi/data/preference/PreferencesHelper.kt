@@ -134,7 +134,7 @@ class PreferencesHelper(val context: Context) {
 
     fun catalogueDisplayMode() = flowPrefs.getEnum(Keys.catalogueDisplayMode, DisplayMode.COMPACT_GRID)
 
-    fun enabledLanguages() = flowPrefs.getStringSet(Keys.enabledLanguages, setOf("all", "en", Locale.getDefault().language))
+    fun enabledLanguages() = flowPrefs.getStringSet(Keys.enabledLanguages, setOf("en", Locale.getDefault().language))
 
     fun sourceSorting() = flowPrefs.getInt(Keys.sourcesSort, 0)
 

@@ -18,6 +18,24 @@ class ExtensionFilterController : SettingsController() {
 
             val activeLangs = preferences.enabledLanguages().get()
 
+            switchPreference {
+                preferenceScreen.addPreference(this)
+                title = "Semua Bahasa"
+                isPersistent = false
+                isChecked = "all" in activeLangs
+
+                onChange { newValue ->
+                    val checked = newValue as Boolean
+                    val currentActiveLangs = preferences.enabledLanguages().get()
+                    if (checked) {
+                        preferences.enabledLanguages().set(currentActiveLangs + "all")
+                    } else {
+                        preferences.enabledLanguages().set(currentActiveLangs - "all")
+                    }
+                    true
+                }
+            }
+
             val availableLangs =
                 Injekt.get<ExtensionManager>().availableExtensions.groupBy {
                     it.lang
