@@ -11,7 +11,6 @@ import eu.kanade.tachiyomi.ui.base.holder.BaseFlexibleViewHolder
 import eu.kanade.tachiyomi.ui.base.holder.SlicedHolder
 import eu.kanade.tachiyomi.ui.webview.WebViewActivity
 import eu.kanade.tachiyomi.util.system.LocaleHelper
-import eu.kanade.tachiyomi.util.system.getResourceColor
 import io.github.mthli.slice.Slice
 
 class ExtensionHolder(view: View, override val adapter: ExtensionAdapter) :
@@ -65,73 +64,32 @@ class ExtensionHolder(view: View, override val adapter: ExtensionAdapter) :
     }
 
     @Suppress("ResourceType")
-    fun bindButtons(item: ExtensionItem) =
-        with(binding.extButton) {
-            setTextColor(context.getResourceColor(androidx.appcompat.R.attr.colorAccent))
+    fun bindButtons(item: ExtensionItem) {
+        val extension = item.extension
+        val installStep = item.installStep
+        val isIdle = installStep == InstallStep.Idle || installStep == InstallStep.Error
 
-            val extension = item.extension
-
-            val installStep = item.installStep
-            text =
-                when (installStep) {
-                    InstallStep.Pending -> context.getString(R.string.ext_pending)
-                    InstallStep.Downloading -> context.getString(R.string.ext_downloading)
-                    InstallStep.Installing -> context.getString(R.string.ext_installing)
-                    InstallStep.Installed -> context.getString(R.string.ext_installed)
-                    InstallStep.Error -> context.getString(R.string.action_retry)
-                    InstallStep.Idle -> {
-                        when (extension) {
-                            is Extension.Installed -> {
-                                when {
-                                    extension.hasUpdate -> {
-                                        context.getString(R.string.ext_update)
-                                    }
-                                    extension.isObsolete -> {
-                                        setTextColor(context.getResourceColor(androidx.appcompat.R.attr.colorError))
-                                        context.getString(R.string.ext_obsolete)
-                                    }
-                                    extension.isUnofficial -> {
-                                        setTextColor(context.getResourceColor(androidx.appcompat.R.attr.colorError))
-                                        context.getString(R.string.ext_unofficial)
-                                    }
-                                    extension.isRedundant -> {
-                                        setTextColor(context.getResourceColor(androidx.appcompat.R.attr.colorError))
-                                        context.getString(R.string.ext_redundant)
-                                    }
-                                    else -> {
-                                        context.getString(R.string.ext_details).plusRepo(extension)
-                                    }
-                                }
-                            }
-                            is Extension.Untrusted -> context.getString(R.string.ext_trust)
-                            is Extension.Available -> context.getString(R.string.ext_install)
-                        }
-                    }
+        // Tentukan icon berdasarkan state dan tipe extension
+        val iconRes = when (installStep) {
+            InstallStep.Error -> android.R.drawable.ic_menu_rotate
+            InstallStep.Idle -> when (extension) {
+                is Extension.Installed -> when {
+                    extension.hasUpdate -> R.drawable.ic_arrow_down_white_32dp
+                    else -> android.R.drawable.ic_menu_info_details
                 }
-
-            val isIdle = installStep == InstallStep.Idle || installStep == InstallStep.Error
-            binding.cancelButton.isVisible = !isIdle
-            binding.webButton.isVisible = isIdle && extension is Extension.Available
-            isEnabled = isIdle
-            isClickable = isIdle
-        }
-
-    // SY -->
-    private fun String.plusRepo(extension: Extension): String {
-        return if (extension is Extension.Available) {
-            when (extension.repoUrl) {
-                else -> {
-                    this +
-                        if (this.isEmpty()) {
-                            ""
-                        } else {
-                            " • "
-                        } + itemView.context.getString(R.string.repo_source)
-                }
+                is Extension.Available -> R.drawable.ic_file_download_black_24dp
+                is Extension.Untrusted -> android.R.drawable.ic_dialog_alert
+                else -> R.drawable.ic_file_download_black_24dp
             }
-        } else {
-            this
+            else -> R.drawable.ic_file_download_black_24dp
         }
+
+        binding.extButton.setImageResource(iconRes)
+        binding.cancelButton.isVisible = !isIdle
+        binding.webButton.isVisible = isIdle && extension is Extension.Available
+        binding.extButton.isEnabled = isIdle
+        binding.extButton.isClickable = isIdle
     }
-    // SY <--
+
+
 }

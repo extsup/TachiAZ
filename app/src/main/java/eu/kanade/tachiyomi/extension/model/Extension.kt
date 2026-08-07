@@ -37,8 +37,9 @@ sealed class Extension {
         val apkName: String,
         val iconUrl: String,
         // SY -->
-        val repoUrl: String
+        val repoUrl: String,
         // SY <--
+        val sourceUrl: String = "",
     ) : Extension()
 
     data class Untrusted(

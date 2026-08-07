@@ -214,8 +214,16 @@ internal class ExtensionGithubApi {
                 // SY -->
                 val icon = "${repoUrl.substringBeforeLast("index.min.json")}icon/$pkgName.png"
                 // SY <--
+                val sourceUrl = element.jsonObject["sources"]
+                    ?.jsonArray
+                    ?.firstOrNull()
+                    ?.jsonObject
+                    ?.get("baseUrl")
+                    ?.jsonPrimitive
+                    ?.content
+                    ?: ""
 
-                Extension.Available(name, pkgName, versionName, versionCode, libVersion, lang, nsfw, apkName, icon /* SY --> */, repoUrl /* SY <-- */)
+                Extension.Available(name, pkgName, versionName, versionCode, libVersion, lang, nsfw, apkName, icon /* SY --> */, repoUrl /* SY <-- */, sourceUrl)
             }
     }
 

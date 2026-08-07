@@ -138,7 +138,7 @@ open class ExtensionController :
     override fun onWebButtonClick(position: Int) {
         val extension = (adapter?.getItem(position) as? ExtensionItem)?.extension
         if (extension is eu.kanade.tachiyomi.extension.model.Extension.Available) {
-            val url = extension.repoUrl
+            val url = extension.sourceUrl.ifEmpty { extension.repoUrl }
             val intent = eu.kanade.tachiyomi.ui.webview.WebViewActivity.newIntent(
                 activity!!,
                 url,
