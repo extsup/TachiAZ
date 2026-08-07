@@ -79,7 +79,7 @@ open class ExtensionPresenter(
                 .filter { avail ->
                     installed.none { it.pkgName == avail.pkgName } &&
                         untrusted.none { it.pkgName == avail.pkgName } &&
-                        (avail.lang in activeLangs || avail.lang == "all") &&
+                        avail.lang in activeLangs &&
                         (showNsfwExtensions || !avail.isNsfw)
                 }
                 .sortedBy { it.pkgName }
