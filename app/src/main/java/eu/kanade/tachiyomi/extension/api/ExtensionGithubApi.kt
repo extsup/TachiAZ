@@ -215,9 +215,9 @@ internal class ExtensionGithubApi {
                 val icon = "${repoUrl.substringBeforeLast("index.min.json")}icon/$pkgName.png"
                 // SY <--
                 val sourceUrl = element.jsonObject["sources"]
-                    ?.jsonArray
+                    ?.let { it.jsonArray }
                     ?.firstOrNull()
-                    ?.jsonObject
+                    ?.let { it.jsonObject }
                     ?.get("baseUrl")
                     ?.jsonPrimitive
                     ?.content
