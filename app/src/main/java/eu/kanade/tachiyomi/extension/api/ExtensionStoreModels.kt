@@ -122,7 +122,8 @@ fun NetworkExtensionStore.ExtensionList.toAvailableExtensions(repoUrl: String): 
             isNsfw = extension.contentWarning >= NetworkExtensionStore.ContentWarning.MIXED,
             apkName = extension.resources.apkUrl,
             iconUrl = extension.resources.iconUrl,
-            repoUrl = repoUrl
+            repoUrl = repoUrl,
+            sourceUrl = extension.sources.firstOrNull()?.homeUrl ?: ""
         )
     }
 }

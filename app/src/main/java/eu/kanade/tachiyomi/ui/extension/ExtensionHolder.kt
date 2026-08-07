@@ -71,17 +71,23 @@ class ExtensionHolder(view: View, override val adapter: ExtensionAdapter) :
 
         // Tentukan icon berdasarkan state dan tipe extension
         val iconRes = when (installStep) {
-            InstallStep.Error -> android.R.drawable.ic_menu_rotate
+            InstallStep.Pending,
+            InstallStep.Downloading,
+            InstallStep.Installing,
+            InstallStep.Installed -> R.drawable.ic_file_download_black_24dp
+            InstallStep.Error -> R.drawable.ic_info_24dp
             InstallStep.Idle -> when (extension) {
                 is Extension.Installed -> when {
                     extension.hasUpdate -> R.drawable.ic_arrow_down_white_32dp
-                    else -> android.R.drawable.ic_menu_info_details
+                    extension.isObsolete,
+                    extension.isUnofficial,
+                    extension.isRedundant -> R.drawable.ic_warning_white_24dp
+                    else -> R.drawable.ic_settings_24dp
                 }
                 is Extension.Available -> R.drawable.ic_file_download_black_24dp
-                is Extension.Untrusted -> android.R.drawable.ic_dialog_alert
+                is Extension.Untrusted -> R.drawable.ic_error_grey
                 else -> R.drawable.ic_file_download_black_24dp
             }
-            else -> R.drawable.ic_file_download_black_24dp
         }
 
         binding.extButton.setImageResource(iconRes)
