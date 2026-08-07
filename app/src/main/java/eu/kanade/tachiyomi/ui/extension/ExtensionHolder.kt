@@ -44,7 +44,23 @@ class ExtensionHolder(view: View, override val adapter: ExtensionAdapter) :
 
         // Set source name
         binding.extTitle.text = extension.name
-        binding.version.text = extension.versionName
+
+        val repoName = when (extension) {
+            is Extension.Available -> extension.repoUrl
+            is Extension.Installed -> extension.repoUrl
+            else -> ""
+        }.let { url ->
+            if (url.isNotEmpty()) {
+                runCatching {
+                    android.net.Uri.parse(url).pathSegments?.getOrNull(0) ?: ""
+                }.getOrDefault("")
+            } else ""
+        }
+
+        val nsfwLabel = if (extension.isNsfw) " • 18+" else ""
+        val repoLabel = if (repoName.isNotEmpty()) " • @$repoName" else ""
+
+        binding.version.text = extension.versionName + repoLabel + nsfwLabel
         binding.lang.text =
             if (extension !is Extension.Untrusted) {
                 LocaleHelper.getSourceDisplayName(extension.lang, itemView.context)

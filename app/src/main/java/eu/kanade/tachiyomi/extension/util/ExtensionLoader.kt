@@ -193,9 +193,13 @@ internal object ExtensionLoader {
                 else -> "all"
             }
 
+        val repoUrl = context.getSharedPreferences("ext_repos", android.content.Context.MODE_PRIVATE)
+            .getString(pkgName, "") ?: ""
+
         val extension =
             Extension.Installed(
                 extName, pkgName, versionName, versionCode, libVersion, lang, isNsfw, sources,
+                repoUrl = repoUrl,
                 isUnofficial = false
             )
         return LoadResult.Success(extension)

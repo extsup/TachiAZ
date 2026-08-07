@@ -426,8 +426,14 @@ class ExtensionManager(
      */
     private fun Extension.Installed.withUpdateCheck(): Extension.Installed {
         val availableExt = availableExtensions.find { it.pkgName == pkgName }
-        if (availableExt != null && availableExt.versionCode > versionCode) {
-            return copy(hasUpdate = true)
+        if (availableExt != null) {
+            // Simpan repoUrl ke preferences
+            preferences.context.getSharedPreferences("ext_repos", android.content.Context.MODE_PRIVATE)
+                .edit().putString(pkgName, availableExt.repoUrl).apply()
+            if (availableExt.versionCode > versionCode) {
+                return copy(hasUpdate = true, repoUrl = availableExt.repoUrl)
+            }
+            return copy(repoUrl = availableExt.repoUrl)
         }
         return this
     }

@@ -20,6 +20,7 @@ sealed class Extension {
         override val lang: String,
         override val isNsfw: Boolean,
         val sources: List<Source>,
+        val repoUrl: String = "",
         val hasUpdate: Boolean = false,
         val isObsolete: Boolean = false,
         val isUnofficial: Boolean = false,
