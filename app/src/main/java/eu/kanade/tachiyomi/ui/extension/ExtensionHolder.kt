@@ -78,7 +78,7 @@ class ExtensionHolder(view: View, override val adapter: ExtensionAdapter) :
             InstallStep.Error -> R.drawable.ic_info_24dp
             InstallStep.Idle -> when (extension) {
                 is Extension.Installed -> when {
-                    extension.hasUpdate -> R.drawable.ic_arrow_down_white_32dp
+                    extension.hasUpdate -> R.drawable.ic_download_update_24dp
                     extension.isObsolete || extension.isUnofficial || extension.isRedundant -> R.drawable.ic_warning_white_24dp
                     else -> R.drawable.ic_settings_24dp
                 }
