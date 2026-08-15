@@ -255,6 +255,7 @@ class PreferencesHelper(val context: Context) {
         )
 
     fun imageResizeUrl() = flowPrefs.getString(Keys.imageResizeUrl, "")
+    fun imageResizeMode() = flowPrefs.getString(Keys.imageResizeMode, "0")
     fun coverResizeUrl() = flowPrefs.getString(Keys.coverResizeUrl, "")
     fun imageResizeDisabledSources() = flowPrefs.getStringSet(Keys.imageResizeDisabledSources, emptySet())
 

@@ -264,6 +264,7 @@ object PreferenceKeys {
 
     const val defaultUserAgent = "default_user_agent"
     const val imageResizeUrl = "image_resize_url"
+    const val imageResizeMode = "image_resize_mode"
     const val coverResizeUrl = "cover_resize_url"
     const val imageResizeDisabledSources = "image_resize_disabled_sources"
 

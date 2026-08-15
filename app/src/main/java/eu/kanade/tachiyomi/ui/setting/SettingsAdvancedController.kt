@@ -174,12 +174,24 @@ class SettingsAdvancedController : SettingsController() {
                 }
             }
 
+            listPreference {
+                key = Keys.imageResizeMode
+                title = "Image resize service"
+                summary = "%s"
+                entries = arrayOf(
+                    "Tidak Aktif",
+                    "Custom URL"
+                )
+                entryValues = arrayOf("0", "1")
+                defaultValue = "0"
+            }
             editTextPreference {
                 key = Keys.imageResizeUrl
                 title = "Image resize service URL"
-                summary = "URL prefix for resizing manga page images (e.g. https://wsrv.nl/?url=)"
+                summary = "URL prefix untuk resize gambar (contoh: https://resize.example.com?url=)"
                 text = preferences.imageResizeUrl().get()
-                dialogMessage = "Enter the image resize service URL. Leave empty to disable."
+                dialogMessage = "Masukkan URL prefix resize. Hanya digunakan jika mode 'Custom URL' dipilih."
+                dependency = Keys.imageResizeMode
             }
             editTextPreference {
                 key = Keys.coverResizeUrl
