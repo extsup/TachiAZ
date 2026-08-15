@@ -186,8 +186,7 @@ class SettingsAdvancedController : SettingsController() {
                 summary = "URL prefix untuk resize gambar (contoh: https://resize.example.com?url=)"
                 text = preferences.imageResizeUrl().get()
                 dialogMessage = "Masukkan URL prefix resize. Kosongkan untuk nonaktifkan."
-                dependency = Keys.imageResizeEnabled
-            }
+            }.dependency = Keys.imageResizeEnabled
             editTextPreference {
                 key = Keys.coverResizeUrl
                 title = "Cover resize service URL"
