@@ -174,24 +174,19 @@ class SettingsAdvancedController : SettingsController() {
                 }
             }
 
-            listPreference {
-                key = Keys.imageResizeMode
-                title = "Image resize service"
-                summary = "%s"
-                entries = arrayOf(
-                    "Tidak Aktif",
-                    "Custom URL"
-                )
-                entryValues = arrayOf("0", "1")
-                defaultValue = "0"
+            switchPreference {
+                key = Keys.imageResizeEnabled
+                title = "Enable image resize service"
+                summary = "Aktifkan resize TachiAZ. Jika nonaktif, preference resize di ekstensi yang digunakan."
+                defaultValue = false
             }
             editTextPreference {
                 key = Keys.imageResizeUrl
                 title = "Image resize service URL"
                 summary = "URL prefix untuk resize gambar (contoh: https://resize.example.com?url=)"
                 text = preferences.imageResizeUrl().get()
-                dialogMessage = "Masukkan URL prefix resize. Hanya digunakan jika mode 'Custom URL' dipilih."
-                dependency = Keys.imageResizeMode
+                dialogMessage = "Masukkan URL prefix resize. Kosongkan untuk nonaktifkan."
+                dependency = Keys.imageResizeEnabled
             }
             editTextPreference {
                 key = Keys.coverResizeUrl
