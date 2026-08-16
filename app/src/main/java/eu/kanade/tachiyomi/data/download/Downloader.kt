@@ -415,6 +415,15 @@ class Downloader(
                 if (imageUrl != null) page.imageUrl = imageUrl
             }
             .flatMap {
+                val resizeEnabled = preferences.imageResizeEnabled().get()
+                val resizeUrl = preferences.imageResizeUrl().get()
+                val resizeDisabled = source.id.toString() in preferences.imageResizeDisabledSources().get()
+                if (resizeEnabled && resizeUrl.isNotEmpty() && !resizeDisabled && !page.imageUrl.isNullOrEmpty()) {
+                    val originalUrl = page.imageUrl!!
+                    if (!originalUrl.startsWith(resizeUrl)) {
+                        page.imageUrl = resizeUrl + originalUrl
+                    }
+                }
                 runAsObservable({ source.getImage(page) })
             }
             // SY <--
